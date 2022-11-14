@@ -2,8 +2,6 @@ import React from 'react';
 import './style.min.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
-import MainMenuSection from './sections/MainMenuSection';
-
 import HomeView from './views/HomeView';
 import ContactsView from './views/ContactsView';
 import CategoriesView from './views/CategoriesView';
@@ -13,7 +11,7 @@ import CompareView from './views/CompareView';
 import WishlistView from './views/WishlistView';
 import ShoppingCartView from './views/ShoppingCartView';
 import NotFoundView from './views/NotFoundView';
-import FooterSection from './sections/FooterSection';
+
 
 
 function App() {
