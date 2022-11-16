@@ -3,6 +3,7 @@ import MainMenuSection from '../sections/MainMenuSection'
 import BreadcrumbSection from '../sections/BreadcrumbSection';
 import FooterSection from '../sections/FooterSection'
 import MapSection from '../sections/MapSection';
+import ContactFormSection from '../sections/ContactFormSection';
 
 
 const ContactsView = () => {
@@ -14,6 +15,7 @@ const ContactsView = () => {
       <MainMenuSection />
       <BreadcrumbSection currentPage="Contacts" />
       <MapSection />
+      <ContactFormSection />
       <FooterSection />
     </>
   )
