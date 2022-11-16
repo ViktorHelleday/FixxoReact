@@ -4,6 +4,11 @@ html, body {
     font-size: 16px;
 }
 
+header {
+    background: #E6E6E6;
+    background: linear-gradient(90deg, #E6E6E6 0%, #F5F5F5 100%);
+}
+
 a {
     color: $color-theme;
     text-decoration: none;
