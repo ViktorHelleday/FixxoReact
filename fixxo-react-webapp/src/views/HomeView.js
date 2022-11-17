@@ -1,13 +1,16 @@
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
 import FooterSection from '../sections/FooterSection';
 import MainMenuSection from '../sections/MainMenuSection';
 import ProductGridSection from '../sections/ProductGridSection';
 import ShowcaseSection from '../sections/ShowcaseSection';
+import { FeaturedProductsContext, ProductContext } from '../contexts/contexts'
 
 
-const HomeView = ({products = []}) => {
+const HomeView = () => {
 
   window.top.document.title = 'Fixxo.'
+  
+  const featuredProducts = useContext(ProductContext)
 
   return (
     <>
@@ -16,8 +19,7 @@ const HomeView = ({products = []}) => {
         <MainMenuSection />
         <ShowcaseSection />
       </header>
-      <ProductGridSection title="Featured Products" products={products} />
-      <ProductGridSection title="Top Products" products={products} />
+      <ProductGridSection title="Featured Products" products={featuredProducts} />
       <FooterSection />
     </>
   )

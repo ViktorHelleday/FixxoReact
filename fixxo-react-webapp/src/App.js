@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './style.min.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
@@ -12,36 +12,45 @@ import CompareView from './views/CompareView';
 import WishlistView from './views/WishlistView';
 import ShoppingCartView from './views/ShoppingCartView';
 import NotFoundView from './views/NotFoundView';
-
-
+import { ProductContext } from './contexts/contexts'
 
 function App() {
 
-  const [featuredProducts, setFeaturedProducts] = useState ([
-    {id: 1, name: "Modern Black Blouse", category: "Fashion", price: "$35.00", rating: 5, img: "https://images.pexels.com/photos/322207/pexels-photo-322207.jpeg?auto=compress&cs=tinysrgb&w=1600"},
-    {id: 2, name: "Modern Blue Boxers", category: "Fashion", price: "$35.00", rating: 5, img: "https://images.pexels.com/photos/325876/pexels-photo-325876.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"},
-    {id: 3, name: "Modern Yellow T-shirt", category: "Fashion", price: "$35.00", rating: 5, img: "https://images.pexels.com/photos/298863/pexels-photo-298863.jpeg?auto=compress&cs=tinysrgb&w=1600"},
-    {id: 4, name: "Modern Jeans", category: "Fashion", price: "$35.00", rating: 5, img: "https://images.pexels.com/photos/45982/pexels-photo-45982.jpeg?auto=compress&cs=tinysrgb&w=1600"},
-    {id: 5, name: "Modern Black Blouse", category: "Fashion", price: "$35.00", rating: 5, img: "https://images.pexels.com/photos/322207/pexels-photo-322207.jpeg?auto=compress&cs=tinysrgb&w=1600"},
-    {id: 6, name: "Modern Black Blouse", category: "Fashion", price: "$35.00", rating: 5, img: "https://images.pexels.com/photos/325876/pexels-photo-325876.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"},
-    {id: 7, name: "Modern Black Blouse", category: "Fashion", price: "$35.00", rating: 5, img: "https://images.pexels.com/photos/298863/pexels-photo-298863.jpeg?auto=compress&cs=tinysrgb&w=1600"},
-    {id: 8, name: "Modern Black Blouse", category: "Fashion", price: "$35.00", rating: 5, img: "https://images.pexels.com/photos/45982/pexels-photo-45982.jpeg?auto=compress&cs=tinysrgb&w=1600"}
-  ])
+  const [products, setProducts] = useState ([])
+  const [featuredProducts, setFeaturedProducts] = useState ([])
+  const [dealProducts, setDealProducts] = useState ([])
 
-  const [topProducts, setTopProducts] = useState ([
-    {id: 1, name: "Modern Black Blouse", category: "Fashion", price: "$35.00", rating: 5, img: "https://images.pexels.com/photos/322207/pexels-photo-322207.jpeg?auto=compress&cs=tinysrgb&w=1600"},
-    {id: 2, name: "Modern Black Blouse", category: "Fashion", price: "$35.00", rating: 5, img: "https://images.pexels.com/photos/325876/pexels-photo-325876.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"},
-    {id: 3, name: "Modern Black Blouse", category: "Fashion", price: "$35.00", rating: 5, img: "https://images.pexels.com/photos/298863/pexels-photo-298863.jpeg?auto=compress&cs=tinysrgb&w=1600"},
-    {id: 4, name: "Modern Black Blouse", category: "Fashion", price: "$35.00", rating: 5, img: "https://images.pexels.com/photos/45982/pexels-photo-45982.jpeg?auto=compress&cs=tinysrgb&w=1600"}
-  ])
+  useEffect (() => {
+    const fetchAllProducts = async () => {
+      let result = await fetch('https://win22-webapi.azurewebsites.net/api/products')
+      setProducts(await result.json())
+    }
+    fetchAllProducts()
+
+    const fetchFeaturedProducts = async () => {
+      let result = await fetch('https://win22-webapi.azurewebsites.net/api/products?take=8')
+      setFeaturedProducts(await result.json())
+    }
+    fetchFeaturedProducts()
+
+    const fetchDealProducts = async () => {
+      let result = await fetch('https://win22-webapi.azurewebsites.net/api/products?take=4')
+      setDealProducts(await result.json())
+    }
+    fetchDealProducts()
+
+  }, [setProducts, setFeaturedProducts, setDealProducts])
+
+
 
   return (
     <BrowserRouter>
+      <ProductContext.Provider value={{products, featuredProducts, dealProducts}}>
       <Routes>
-        <Route path="/" element={<HomeView products={featuredProducts} />} />
+        <Route path="/" element={<HomeView />} />
         <Route path="/contacts" element={<ContactsView />} />
         <Route path="/categories" element={<CategoriesView />} />
-        <Route path="/products" element={<ProductsView products={featuredProducts} />} />
+        <Route path="/products" element={<ProductsView />} />
         <Route path="/products/:name" element={<ProductDetailsView />} />
         <Route path="/search" element={<SearchView />} />
         <Route path="/compare" element={<CompareView />} />
@@ -49,6 +58,7 @@ function App() {
         <Route path="/shoppingcart" element={<ShoppingCartView />} />
         <Route path="*" element={<NotFoundView />} />
       </Routes>
+      </ProductContext.Provider>
     </BrowserRouter>
   );
 }
