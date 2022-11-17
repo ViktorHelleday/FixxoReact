@@ -7,13 +7,15 @@ import { ProductContext } from '../contexts/contexts'
 
 const ProductsView = () => {
 
-  const productContext = useContext(ProductContext)
+  window.top.document.title = 'Products | Fixxo.'
+
+  const { products } = useContext(ProductContext);
 
   return (
     <>
       <MainMenuSection />
       <BreadcrumbSection currentPage="Products" />
-      <ProductGridSection title="Products" products={productContext.all} />
+      <ProductGridSection title="Products" items={products} />
       <FooterSection />
     </>
   )

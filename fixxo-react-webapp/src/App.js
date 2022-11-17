@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import './style.min.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import './style.min.css';
 
 import HomeView from './views/HomeView';
 import ContactsView from './views/ContactsView';
