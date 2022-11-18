@@ -9,7 +9,7 @@ const ProductsView = () => {
 
   window.top.document.title = 'Products | Fixxo.'
 
-  const { products } = useContext(ProductContext);
+  const products = useContext(ProductContext);
 
   return (
     <>

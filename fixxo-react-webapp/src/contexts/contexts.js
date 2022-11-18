@@ -2,4 +2,4 @@ import { createContext } from 'react';
 
 export const ProductContext = createContext()
 export const FeaturedProductsContext = createContext()
-export const DealsProductsContext = createContext()
+export const DealProductsContext = createContext()

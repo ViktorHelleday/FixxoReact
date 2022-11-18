@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import './style.min.css';
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { ProductContext, FeaturedProductsContext, DealProductsContext } from './contexts/contexts'
+
 
 import HomeView from './views/HomeView';
 import ContactsView from './views/ContactsView';
@@ -12,7 +14,7 @@ import CompareView from './views/CompareView';
 import WishlistView from './views/WishlistView';
 import ShoppingCartView from './views/ShoppingCartView';
 import NotFoundView from './views/NotFoundView';
-import { ProductContext } from './contexts/contexts'
+
 
 function App() {
 
@@ -23,19 +25,19 @@ function App() {
   useEffect (() => {
     const fetchAllProducts = async () => {
       let result = await fetch('https://win22-webapi.azurewebsites.net/api/products')
-      setProducts(await result.json());
+      setProducts(await result.json())
     }
     fetchAllProducts()
 
     const fetchFeaturedProducts = async () => {
       let result = await fetch('https://win22-webapi.azurewebsites.net/api/products?take=8')
-      setFeaturedProducts(await result.json());
+      setFeaturedProducts(await result.json())
     }
     fetchFeaturedProducts()
 
     const fetchDealProducts = async () => {
       let result = await fetch('https://win22-webapi.azurewebsites.net/api/products?take=4')
-      setDealProducts(await result.json());
+      setDealProducts(await result.json())
     }
     fetchDealProducts()
 
@@ -45,19 +47,23 @@ function App() {
 
   return (
     <BrowserRouter>
-      <ProductContext.Provider value={{products, featuredProducts, dealProducts}}>
-      <Routes>
-        <Route path="/" element={<HomeView />} />
-        <Route path="/contacts" element={<ContactsView />} />
-        <Route path="/categories" element={<CategoriesView />} />
-        <Route path="/products" element={<ProductsView />} />
-        <Route path="/products/:name" element={<ProductDetailsView />} />
-        <Route path="/search" element={<SearchView />} />
-        <Route path="/compare" element={<CompareView />} />
-        <Route path="/wishlist" element={<WishlistView />} />
-        <Route path="/shoppingcart" element={<ShoppingCartView />} />
-        <Route path="*" element={<NotFoundView />} />
-      </Routes>
+      <ProductContext.Provider value={products}>
+      <FeaturedProductsContext.Provider value={featuredProducts}>
+      <DealProductsContext.Provider value={dealProducts}>
+        <Routes>
+          <Route path="/" element={<HomeView />} />
+          <Route path="/contacts" element={<ContactsView />} />
+          <Route path="/categories" element={<CategoriesView />} />
+          <Route path="/products" element={<ProductsView />} />
+          <Route path="/products/:name" element={<ProductDetailsView />} />
+          <Route path="/search" element={<SearchView />} />
+          <Route path="/compare" element={<CompareView />} />
+          <Route path="/wishlist" element={<WishlistView />} />
+          <Route path="/shoppingcart" element={<ShoppingCartView />} />
+          <Route path="*" element={<NotFoundView />} />
+        </Routes>
+      </DealProductsContext.Provider>
+      </FeaturedProductsContext.Provider>
       </ProductContext.Provider>
     </BrowserRouter>
   );
