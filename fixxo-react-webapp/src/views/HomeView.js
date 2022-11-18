@@ -7,6 +7,7 @@ import LeftDealSection from '../sections/LeftDealSection';
 import FooterSection from '../sections/FooterSection';
 import { DealProductsContext, FeaturedProductsContext, ProductContext } from '../contexts/contexts';
 import RightDealSection from '../sections/RightDealSection';
+import SupportSectionBottom from '../sections/SupportSectionBottom';
 
 
 
@@ -28,6 +29,7 @@ const HomeView = () => {
       <InspoSection />
       <LeftDealSection items={dealProducts} />
       <RightDealSection items={dealProducts} />
+      <SupportSectionBottom />
       <FooterSection />
     </>
   )
